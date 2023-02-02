@@ -1,0 +1,202 @@
+JOINTS
+	Joints are used to collect the data from two or more tables.
+
+Types:
+	Inner Join/equi Join
+	Outer join
+		-->Left Outer join
+		-->Right Outer join
+		-->Full outer join
+	Cross join/Cartesian product
+	Self join
+
+Course table:
+
+CID	CNAME
+10	SQL
+20	PLSQL
+30	JAVA
+40	PHP
+50	C++
+
+Students Table:
+
+SID	SNAME	CID
+1	Ramesh	30
+2	Mugan	10
+3	Madhu	50
+4	Vino	20
+5	Shiva	-
+
+Inner join/Equi join:
+	It provide only matched data from both the tables.
+
+Select Course.Cname, Students.Sname
+From Course, Students
+Where Course.Cid=Students.Cid;
+
+
+Select C.Cname, S.Sname
+From Course C, Students S
+Where C.Cid=S.Cid;
+
+
+Outer Join:
+	Left Outer join:
+		It provide matched and unmatched data from 1st table 
+and only matched data fron 2nd table.
+
+Select C.Cname, S.Sname
+From Course C, Students S
+Where C.Cid=S.Cid(+);
+
+	Right Outer join:
+		It provide matched and unmatched data from 2st table 
+and only matched data fron 1nd table.
+
+Select C.Cname, S.Sname
+From Course C, Students S
+Where C.Cid(+)=S.Cid;
+
+	Full Outer join:
+		It provide matched and unmatched records from both the table.
+	Con: instead of 'Where', use 'ON' in where clause.
+
+Select C.Cname, S.Sname
+From Course C Full outer join Students S
+ON C.Cid=S.Cid;
+
+Cross Join/cartesian product:
+	If you perform join without join condition.
+in cross join all the records in the 1st table matched with all the records in 2nd table.
+
+3 *4 =12
+5 *5 =25
+
+Select C.Cname, S.Sname
+From Course C, Students S;
+
+Self Join:
+	Joining the table by with ifself.
+
+Select E1.First_name as Emp_name,E2.First_name as Man_name
+from Employees E1, Employees E2
+Where E1.manager_id=E2.employee_id;
+
+
+
+
+
+
+
+
+
+
+
+
+===================================================================================			Date function and Number function
+Sub Query:
+	A select query is embedded with another select query.
+
+Types:
+	Single Row Sub Query
+	Multiple Row Sub Query
+	Scalar 
+	Inline View
+	Nested
+	Correlated
+	Multiple Column.
+
+Single row sub query:
+	If sub query returns only one row.
+
+	1st- Inner
+	2nd-Outer
+
+select first_name, Salary from employees
+where salary =(Select max(Salary) from employees); 
+
+===================================================================
+Multiple row Sub Query:
+	If Sub query returns Multiple row.
+
+Select First_name, Salary from Employees
+Where Department_id in(Select Department_id from departments
+where department_name in ('IT','Shipping'));
+
+==================================================================================
+
+Scalar Sub Query:
+	If you write a query in 'Select' Clause.
+
+Select 1+2+(Select 3+4 from Dual) From Dual;
+
+============================================================
+
+
+Inline View Sub Query:
+	write query in 'From' Clause.
+
+Select * from 
+(Select First_name, Salary, Dense_rank() Over (Order by Salary desc) As DRK from employees)
+where DRK=2;
+
+
+=================================================================================================
+Nested Sub Query:
+	If sub query embedded with another sub query.
+
+Select First_name, Salary from employees
+where department_id in (Select Department_id from Departments);
+
+====================================================================================
+Correlated Sub Query:
+	If inner query depends on outer query.
+
+Select First_name, Salary from Employees E
+where Department_id in (
+Select department_id from Departments D
+where E.department_id=D.Department_id
+);
+
+=================================================================================
+
+Multiple Column Sub Query:
+	The query contains more then two column in where condition.
+
+Select First_name, Salary from employees
+where (Department_id,Salary) in
+(Select department_id, max(Salary) from Employees
+Group by Department_id);
+
+	
+============================================================================
+
+ref:
+
+Select * from (Select First_name, Salary from employees
+where (Department_id,Salary) in
+(Select department_id, max(Salary) from Employees
+Group by Department_id))
+where First_name like 'S%'
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+

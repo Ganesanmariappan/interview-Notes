@@ -1,0 +1,227 @@
+SQL - Structured Query Language (Basics)
+
+Sql Stands For Structured Query Language:
+
+• By Using Sql Language We Can Write Queries To Interact With The Database Like
+Store Data, Retrieve Data & Manipulate Data.
+• Sql Is An English Like Language & It Can Be Written In Single Line Or Multiple Lines.
+• It Is Not Case Sensitive
+
+
+Technical Skills:
+
+Database	- Oracle (RDBMS- Relational Database management System)
+Language	- SQL /PLSQL
+Tools		- isql, SQLplus, toad, SQl Developer
+Version		- 10G, 11G, 12C, 18C & 21C
+		G- Grid
+		C-Cloud
+
+Data:
+	A small set of information becomes a data.
+Table:
+	Table is a collection of data composed of rows and columns.
+	All the data in backend is in only one format, that is "Table format".
+
+select * From Employees;
+Select / from/ Where	-clause
+	* 		-All columns
+Employees		-Table Name
+
+select First_name, Salary From Employees where Salary=17000;
+
+select First_name, Salary 
+From Employees 
+where Salary=17000;
+	select		--Column name
+	From		--table name
+	Where		--Condition 
+						
+select First_name As Name, Salary As Sal				
+From Employees;
+	As-Alias
+
+select First_name || Salary
+From Employees;
+
+	||- Concatination operator
+
+select 1+2 from Dual;
+Select 'hello' from dual;
+
+	Dual	- It is tool owned table (Dummy table) used to Print a statement.
+
+Select Distinct Department_id from Employees;
+	distinct	-to remove duplicates
+
+Select Distinct Department_id from Employees
+Order by department_id Asc;
+
+Select Distinct Department_id from Employees
+Order by department_id desc;
+
+	Order by- Asc/desc	Sorting clause
+
+==============================================================================================================
+Relational Operators:									
+======================
+	=
+	!=
+	>
+	<
+	>=
+	<=
+
+select First_name, Salary From Employees 
+where Salary=17000;
+
+select First_name, Salary From Employees 
+where Salary!=17000;
+
+select First_name, Salary From Employees 
+where Salary > 17000;
+
+select First_name, Salary From Employees 
+where Salary < 17000;
+							
+select First_name, Salary From Employees 
+where Salary >= 17000;
+
+select First_name, Salary From Employees 
+where Salary <= 17000;
+
+
+Comparison operators:
+========================
+
+	IN
+	Between
+	Like
+	Is null
+
+select First_name, Salary From Employees 
+where Salary IN (17000,6000,9000);
+
+select First_name, Salary From Employees 
+where Salary between 10000 and 20000;
+
+select First_name, Salary from employees					
+where First_name='Steven';
+
+select First_name, Salary from employees
+where First_name like 'S%' ;
+
+select First_name, Salary from employees
+where First_name like '%a' ;
+
+select First_name, Salary from employees
+where First_name like 'S%n' ;
+
+Select First_name, Salary from Employees
+where manager_id=101;
+
+Select First_name, Salary from Employees
+where manager_id is null;
+
+	Null- undefined/ unassigned
+
+
+Not in
+Not between
+not like
+is not null
+
+Logical Operators:
+=====================
+	AND -both
+	OR  -anyone
+
+select First_name, Salary From employees
+where First_name='Steven' AND Salary>17000;
+
+select First_name, Salary From employees
+where First_name='Steven' OR Salary>10000;
+
+===================================================================================================
+
+DDL- Data defnition Language
+=============================
+
+	DDL Commands:
+		-->Create
+		-->Alter
+			Add
+			Drop
+			Rename
+			Modify
+		-->Rename
+		-->Truncate
+		-->Drop
+
+Basic data type:
+================
+Datatype				Max.Length				Support
+========				==========				========
+Number					38					0-9
+Char					2000					a-z A-Z 0-9!@#$%
+Varchar/Varchar2			4000					a-z A-Z 0-9!@#$%
+Date					7					DD-MON-YY (01-Jan-2021)
+Timestamp								DD-MON-YY HH24:MI:SS:AM +5.30
+
+
+
+Create:
+Create Table Emp
+(
+Eid Number,
+Ename varchar2(30),
+Salary Number,
+Email Varchar2(50)
+);
+
+Describe Emp;
+Desc Emp;
+
+Alter:
+Select * from Staff;
+
+Alter table Staff Add Bonus Number;
+Alter table staff drop Column Job_id;
+Alter Table staff Rename Column Email to Email_id;
+Alter Table Staff Modify First_name varchar2(50);
+
+Rename:	
+Rename Staff to Staff_1;
+
+Truncate:
+Truncate Table Staff_1;
+
+Drop:
+Drop Table Staff_1;
+
+=================================================================================================
+DML- Data Manipulation Language:			Constraints					
+=================================
+	DML Commands:
+		-->Insert
+		-->Update
+		-->Delete
+Insert:
+Method 1:
+Insert into EMP(Eid,Ename,Salary,Email) Values(1,'Naveen',15000,'naveen@gmail.com');
+
+Method 2:
+Insert into EMP values(2,'Madhu',19000,'madhu@gmail.com');
+
+Update:
+Select * From EMP;
+Desc EMP;
+
+Update EMP set Salary=30000
+where Eid=3;
+
+Delete:
+Delete From EMP
+Where Eid=4;
+
+

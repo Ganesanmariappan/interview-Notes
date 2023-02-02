@@ -1,0 +1,324 @@
+
+									Date function & Number function
+				
+SINGLE ROW FUNCTIONS
+====================
+CASE MANIPULATION FUNCTIONS
+
+   UPPER
+   LOWER
+   INITCAP
+   
+
+SELECT 1 FROM DUAL;
+SELECT 'GREENS' FROM DUAL;
+SELECT 'greENS' FROM DUAL;
+SELECT 'greENS',UPPER ('greENS'),LOWER ('greENS'),INITCAP('greENS') FROM DUAL;
+===================================================================================================
+GENERAL FUNCTIONS
+=================
+    GREATEST
+    LEAST
+
+SELECT 5 FROM DUAL;
+SELECT 5,2,25,14,58,6 FROM DUAL;
+SELECT GREATEST (5,2,25,14,58,6) FROM DUAL;
+SELECT LEAST (5,2,25,14,58,6) FROM DUAL;
+=============================================================================================================
+SINGLE ROW FUNCTIONS
+====================
+CHARACTER MANIPULATION FUNCTION
+===============================
+   LENGTH
+   SUBSTR
+   INSTR
+   REPLACE
+   TRANSLATE
+   LPAD
+   RPAD 
+   LTRIM
+   RTRIM
+   TRIM
+   CONCAT
+   REVERSE
+ 
+SELECT 'GREENS' FROM DUAL;
+
+SELECT LENGTH ('GREENS') FROM DUAL;
+SELECT LENGTH ('GRE ENS') FROM DUAL;
+
+SELECT SUBSTR ('GREENS',1,3) FROM DUAL;
+SELECT SUBSTR ('GREENS',1,4) FROM DUAL;
+SELECT SUBSTR ('GREENS',2,4) FROM DUAL;
+SELECT SUBSTR ('GREENS',-3) FROM DUAL;
+
+SELECT 'GREENS' FROM DUAL;
+SELECT INSTR ('GREENS','N') FROM DUAL;						
+SELECT INSTR ('GREENS','E') FROM DUAL;
+SELECT INSTR ('GREENS','E',1,1) FROM DUAL;
+SELECT INSTR ('GREENS','E',1,2) FROM DUAL;
+
+ SELECT ('GREENS') FROM DUAL;
+
+SELECT REPLACE ('GREENS','N','X') FROM DUAL;
+SELECT REPLACE ('GREENS','N') FROM DUAL;
+SELECT REPLACE ('GREENS','NS','XY') FROM DUAL;
+SELECT REPLACE ('GREENS','GS','XY') FROM DUAL;
+
+SELECT TRANSLATE ('GREENS','GS','XY') FROM DUAL;
+
+SELECT 'Greens' FROM DUAL;
+
+SELECT LPAD ('Greens',10,'*') FROM DUAL;
+SELECT RPAD ('Greens',10,'*') FROM DUAL;
+
+SELECT '***GRE***ENS***' FROM DUAL;
+SELECT LTRIM ('***GRE***ENS***','*') FROM DUAL;
+SELECT RTRIM ('***GRE***ENS***','*') FROM DUAL;
+SELECT TRIM ('*' FROM '***GRE***ENS***') FROM DUAL;
+
+SELECT REPLACE ('***GRE***ENS***','*') FROM DUAL;
+
+
+select First_name || last_name, Concat(first_name, Last_name) from Employees
+
+SELECT REVERSE ('GREENS') FROM DUAL;
+
+
+Date Function
+Number Function
+
+
+====================================================================================================================================================
+Analytical Function:
+======================
+	Rank()
+	Dense_Rank()
+	Row_number()
+	Lead()
+	Lag()
+	Listagg
+Rank():
+	-->Rank is a analytical function which print rank for a table based on sorting column.
+	-->Ranks skips next value if it is found any duplicates.
+
+select First_name, Salary, Rank() Over (Order by Salary desc) As RK From Employees;
+
+FIRST_NAME	SALARY	RK
+Steven		24000	1
+Madhu		17000	2
+Lex		17000	2
+John		14000	4
+Karen		13500	5
+Michael		13000	6
+---------------------------------------------------------------------------------------------------------------------------
+Dense_rank():
+	-->Dense rank is similar to rank but does'nt skip next value if it is found any duplicates.
+
+select First_name, Salary, Dense_Rank() Over (Order by Salary desc) As DRK From Employees;
+
+FIRST_NAME	SALARY	DRK
+Steven	24000	1
+Madhu	17000	2
+Lex	17000	2
+John	14000	3
+Karen	13500	4
+Michael	13000	5
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Row_number:
+	it is a analytical function which prints unique number for each and every row
+irrespective of duplicates.
+
+select First_name, Salary, Row_number() Over (Order by Salary desc) As RN From Employees;
+
+Row_number:
+1	Steven	24000
+2	Madhu	17000
+3	Lex	17000
+4	John	14000
+5	Karen	13500
+6	Michael	13000
+7	Nancy	12000
+8	Alberto	12000
+9	Shelley	12000
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Lead():
+	Lead is a analytical function which always replace current value with next value.
+
+select Salary, lead(Salary, 2) over (Order by salary desc) as LD From Employees;
+
+select Salary, lead(Salary, 5, 0) over (Order by salary desc) as LD From Employees;
+
+Lead:
+SALARY	LD
+24000	14000
+17000	13500
+17000	13000
+14000	12000
+13500	12000
+13000	12000
+
+	
+Lag():
+	Lag is a analytical function which always replce next value with current value.
+
+select Salary, lag(Salary, 2) over (Order by salary desc) as LG From Employees;
+
+select Salary, lag(Salary, 3, 10) over (Order by salary desc) as LG From Employees;
+
+Lag:
+SALARY	LG
+24000	10
+17000	10
+17000	10
+14000	24000
+13500	17000
+13000	17000
+------------------------------------------------------------------------------------------------------------------------------------------------
+Listagg:
+	--> Listagg is 11G New Feature.
+	--> Listagg converts n number of row into single row.
+
+Select listagg(First_name) within group(Order by First_name Asc) as LSTG from EMployees;
+
+O/P:
+AdamAlanaAlbertoAlexanderAlexanderAlexisAllanAlyssaAmitAnthonyBritneyBruceCharlesChristopher
+
+Select listagg(First_name,' , ') within group(Order by First_name Asc) as LSTG from EMployees;
+
+O/P:
+Adam , Alana , Alberto , Alexander , Alexander , Alexis , Allan , Alyssa , Amit , Anthony , Britney , Bruce , Charles , Christopher
+
+===================================================================================================================================================
+New keyword:										
+
+"Partition by"
+Department wise ranking
+
+select First_name, Salary, Department_id, Dense_Rank() 
+Over (Partition By Department_Id Order by Salary desc) As DRK From Employees;
+
+FIRST_NAME	SALARY	DEPARTMENT_ID	DRK
+Jennifer	4400		10	1
+Michael		13000		20	1
+Pat		6000		20	2
+Den		11000		30	1
+Alexander	3100		30	2
+Shelli		2900		30	3
+
+---------------------------------------------------------------------------------------------------------------------------------
+"With" clause
+
+To find 2nd largest salary?
+
+With EMP_RANK as (select First_name, Salary, Dense_Rank() Over ( Order by Salary desc) As DRK From Employees)
+select * from EMP_RANK
+where DRK=2;
+
+FIRST_NAME	SALARY	DRK
+Madhu	17000	2
+Lex	17000	2
+
+
+==================================================================================================================
+Group function:								
+	Max
+	Min
+	count
+	Sum
+	Avg
+
+6 golden Rule:
+
+Rule 1:
+	Group Function allows only one argument.
+
+Select max(Salary), Min(Salary), Count(Salary) , Sum(Salary), Avg(Salary) from employees;
+
+op:
+MAX(SALARY)	MIN(SALARY)	COUNT(SALARY)	SUM(SALARY)	AVG(SALARY)
+24000		2100		107		691400		6461.68224299065420560747663551401869159
+	
+Rule 2:
+	Group Function ignores null values
+
+select count(A) from A1;					Select * from A1;
+
+COUNT(A)							A
+5								1
+								2
+								3
+								4
+								-
+								5
+
+Rule 3:
+	In group function only count allows "*" symbol.
+
+Select count(*) From A1;
+
+COUNT(*)
+6
+
+Rule 4:
+	In group Function, Max, min, count allows integer type, string type and date type 
+but sum & Avg allows only Integer type.
+
+Select max(Salary), Min(Salary), Count(Salary), Sum(Salary), Avg(Salary) from employees;
+
+op:
+MAX(SALARY)	MIN(SALARY)	COUNT(SALARY)	SUM(SALARY)	AVG(SALARY)
+24000		2100		107		691400		6461.68224299065420560747663551401869159
+
+Select max(First_name), Min(First_name), Count(First_name) , Sum(Salary), Avg(Salary) from employees;
+
+op:
+MAX(FIRST_NAME)	MIN(FIRST_NAME)	COUNT(FIRST_NAME)	SUM(SALARY)	AVG(SALARY)
+Winston		Adam		107			691400		6461.68224299065420560747663551401869159
+
+Select max(hire_date), Min(hire_date), Count(Hire_date) , Sum(Salary), Avg(Salary) from employees;
+
+op:
+MAX(HIRE_DATE)	MIN(HIRE_DATE)	COUNT(HIRE_DATE)	SUM(SALARY)	AVG(SALARY)
+21-APR-00	17-JUN-87	107			691400		6461.68224299065420560747663551401869159
+
+
+Rule 5:
+	If you want department wise data in group function we have to use "Group By" Clause.
+
+select department_id, max(Salary) from Employees
+Group By department_id;
+
+op:
+DEPARTMENT_ID	MAX(SALARY)
+100		12000
+30		11000
+-		7000
+90		24000
+20		13000
+70		10000
+110		12000
+
+Rule 6:
+	If you want raise a condition in group funtion using "Group by" clause 
+then we have to use "having" clause
+
+select department_id, max(Salary) from Employees
+Group By department_id
+having Count(First_name) >1;
+
+op:
+DEPARTMENT_ID	MAX(SALARY)
+100		12000
+30		11000
+90		24000
+20		13000
+110		12000
+50		8200
+80		14000
+
+
+
+

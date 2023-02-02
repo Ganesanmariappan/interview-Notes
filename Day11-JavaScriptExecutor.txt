@@ -1,0 +1,40 @@
+JavaScript Executor : 
+			
+                     JavaScriptExecutor is an Interface 
+
+		     It will allow us to execute JavaScript methods through Selenium webdriver
+
+		     In some places selenium can't be work at that time we use JavaScript 
+to interact that Webelement. 
+
+Total Methods : 13 -->
+
+Syntax : 
+
+	JavaScriptExecutor js= (JavaScriptExecutor) driver; //Narrowing
+
+1.Specific Element :
+
+
+	js.executeScript("arguments[0].scrollIntoView();", WebElementName);
+
+2.Scroll up and down : 
+
+It is based on Java Script.
+
+//return to starting page 
+
+	js.executeScript("window.scroll(0,0)","");
+
+
+//Scroll up and down 
+
+    js.executeScript("window.scrollBy(0, 1000)"); ---> Scroll down 
+
+    js.executeScript("window.scrollBy(0, -500)"); ----> Scroll up
+
+    js.executeScript("arguments[0].click();", webelementname ); --->  click
+
+Horizontal scroll : 
+
+https://www.album.alexflueras.ro/
